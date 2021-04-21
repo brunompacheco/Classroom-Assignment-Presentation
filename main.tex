@@ -16,8 +16,8 @@
 %%
 %%	Incluir \capa para os slides
 %% 
-\titulo{Apresentação em \LaTeX!}
-\autores{Autor 1, Autor 2 e Autor 3}
+\titulo{University Timetabling}
+\autores{Bruno M. Pacheco, Pedro Kretzschmar}
 \universidade{Universidade Federal de Santa Catarina}
 \capa
 
@@ -25,10 +25,230 @@
 %%
 %%	Chamar o ambiente frame para slides comuns
 %%
-\begin{frame}{Introdução}
-\lipsum[75]
+\begin{frame}{Introduction}
+\begin{itemize}
+    \item WTF is university course timetabling?
+    \item Why should I care?
+\end{itemize}
 \end{frame}
 
+
+\begin{frame}{Problem Variations}
+\begin{itemize}
+\item Variation A
+    \begin{itemize}
+    \item Competitions, baselines, benchmarks
+    \item Some research or state-of-the-art or review
+    \end{itemize}
+\item Variation B
+    \begin{itemize}
+    \item Competitions, baselines, benchmarks
+    \item Some research or state-of-the-art or review
+    \end{itemize}
+\item \textbf{Classroom assignment problem}
+    \begin{itemize}
+    \item Competitions, baselines, benchmarks
+    \item Some research or state-of-the-art or review
+    \end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Problem Description}
+    We will tackle the \emph{Classroom Assignment Problem}, in which the faculties and departments of a university define their schedule (timetable) and the problem is to assign rooms to each lecture.
+
+\vspace{10mm}
+
+\begin{columns}[t]
+    \begin{column}{.75\textwidth}
+	\begin{table}[H]
+	    \centering
+	    \resizebox{\textwidth}{!}{
+	    \begin{tabular}{c | c | c | c | c | c | c}
+		Time & Monday & Tuesday & Wednesday & Thursday & Friday & Saturday \\
+		\hline
+		7:30 & Course 1 & Course 2 &  &  & Course 1 // Course 3 &  \\
+		8:20 & Course 1 // Course 5 & Course 2 // Course 6 &  & Course 3 // Course 7 & Course 1 // Course 3 & \\
+		9:10 & Course 1 // Course 5 & Course 6 &  & Course 3 // Course 7 &  & \\
+		10:10 & Course 4 &  &  & Course 3 // Course 5 &  & \\
+		11:00 & Course 4 &  &  & Course 3 // Course 5 &  & \\
+	    \end{tabular}}
+	\end{table}
+    \end{column}
+
+    \begin{column}{.25\textwidth}
+	\begin{table}[H]
+	    \centering
+	    \resizebox{.9\textwidth}{!}{
+	    \begin{tabular}{ c | c}
+	    Course & Assigned Room \\
+	    \hline
+	    Course 1 & Room A \\
+	    Course 2 & Room B \\
+	    Course 3 & Room B \\
+	    Course 4 & Room A \\
+	    Course 5 & Room C \\
+	    Course 6 & Room A \\
+	    Course 7 & Room A \\
+	\end{tabular}}
+	\end{table}
+    \end{column}
+\end{columns}
+\end{frame}
+
+
+\begin{frame}{Features}
+    There are five main variables in this problem:
+\begin{description}
+    \item[Lecture] It varies from the common interpretation in that it occupies a room for a single time period.
+    \item[Course] Has one or more lectures and defines the \emph{size} and \emph{attributes} needed from the room.
+    \item[Room] Has size and attributes (e.g., computers, beamers, lab).
+    \item[Time period] A time interval in which the lectures occur.
+    \item[Pattern] A set of lectures from a given course that will take place in the same room.
+\end{description}
+\end{frame}
+
+\begin{frame}{Features - Example}
+    An instance of the problem must provide information on the courses and the rooms on the time periods.
+    \begin{table}[H]
+        \centering
+	\resizebox{.9\textwidth}{!}{
+        \begin{tabular}{c | c | c | c | c }
+	    Course ($c$) & Size ($size_c$) & Attributes ($att_c$) & Lectures ($l^{(c)}$) & Time periods ($t$) \\
+	    \hline
+	    $c_1$ & 125 & - & $l_1^{(1)}$ & $t_1$ \\
+		  &  &  & $l_2^{(1)}$ & $t_2$ \\
+		  &  &  & $l_3^{(1)}$ & $t_5$ \\
+	    \hline
+	    $c_2$ & 25 & computers, beamer & $l_1^{(2)}$ & $t_2$ \\
+		  &  &  & $l_2^{(2)}$ & $t_3$ \\
+		  &  &  & $l_3^{(2)}$ & $t_4$ \\
+	\end{tabular}}
+    \end{table}
+
+    \begin{table}[H]
+        \centering
+	\resizebox{.9\textwidth}{!}{
+        \begin{tabular}{c | c | c | c}
+	    Room ($r$) & Size ($size_r$) & Attributes ($att_r$) & Available time periods ($T_r$) \\
+	    \hline
+	    $r_1$ & 150 & beamer & $t_1, t_2, t_3, t_4$ \\
+	    $r_2$ & 300 & computer, beamer & $t_1, t_2, t_3, t_4, t_5$
+	\end{tabular}}
+    \end{table}
+\end{frame}
+
+\begin{frame}{Features - Example}
+    Preprocessing the input gets us the patterns for each course and the feasible rooms.
+    \begin{table}[H]
+        \centering
+	\resizebox{.9\textwidth}{!}{
+        \begin{tabular}{c | c | c | c | c | c | c | c}
+	    Course ($c$) & $t_1$ & $t_2$ & $t_3$ & $t_4$ & $t_5$ & Feasible Rooms ($R_c$) & Patterns ($P_c$) \\
+	    \hline
+	    $c_1$ & $l_1^{(1)}$ & $l_2^{(1)}$ &  &  & $l_3^{(1)}$ & $r_2 $ & $\left\{ l_1^{(1)} \right\}, \left\{ l_2^{(1)} \right\} , \left\{ l_3^{(1)} \right\}, \left\{ l_1^{(1)},l_2^{(1)} \right\} ,  $ \\
+		  & & & & & & & $\left\{ l_1^{(1)}, l_3^{(1)} \right\} ,\left\{ l_2^{(1)},l_3^{(1)} \right\} , \left\{ l_1^{(1)},l_2^{(1)}, l_3^{(1)} \right\}$ \\
+		  \hline
+	    $c_2$ & & $l_1^{(2)}$ & $l_2^{(2)}$ & $l_3^{(2)}$ & & $r_1, r_2 $ & $\left\{ l_1^{(2)} \right\}, \left\{ l_2^{(2)} \right\} , \left\{ l_3^{(2)} \right\}, \left\{ l_1^{(2)},l_2^{(2)} \right\} ,  $ \\
+		  & & & & & & & $\left\{ l_1^{(2)}, l_3^{(2)} \right\} ,\left\{ l_2^{(2)},l_3^{(2)} \right\} , \left\{ l_1^{(2)},l_2^{(2)}, l_3^{(2)} \right\}$ \\
+	\end{tabular}}
+    \end{table}
+    For this instance, a possible solution can be
+    \begin{table}[H]
+        \centering
+	\resizebox{.4\textwidth}{!}{
+        \begin{tabular}{c | c | c}
+	    Course ($c$) & Pattern ($p$) & Room ($r$) \\
+	    \hline
+	    $c_1$ & $\left\{ l_1^{(1)} \right\} $ & $r_2$ \\
+		  & $\left\{ l_2^{(1)} \right\} $ & $r_1$ \\
+		  & $\left\{ l_3^{(1)} \right\} $ & $r_2$ \\
+	    \hline
+	    $c_2$ & $\left\{ l_1^{(2)}, l_2^{(2)}, l_3^{(2)} \right\} $ & $r_2$
+	\end{tabular}}
+    \end{table}
+\end{frame}
+
+\begin{frame}{Problem Formulation}
+    First, the definition and notation we use for the formulation.
+
+    \begin{description}
+	\item[$C$] is the set of all courses $c$.
+	\item[$L_c$] is the set of all lectures that belong to $c$, that is, $L_c = \left\{ l_1^{(c)}, l_2^{(c)},\ldots \right\} $. Also, $L = \dot{\bigcup}_{c\in C}  L_c$.
+	\item[$P_c$] is the set of all patterns $p$ of $c$, that is, the power set of $L_c$. Again, $P = \dot{\bigcup}_{c\in C}  P_c$. We also define $P_l$ as the set of all patterns that contain lecture $l$.
+	\item[$R$] is the set of all rooms $r$. $R_c$ is the set of feasible rooms for course $c$ and, in a similar fashion, $R_p$ is the set of feasible rooms for a pattern $p$.
+	\item[$T$] is the set of all time periods $t$. $T_p$ is the set of time periods for each lecture of pattern $p$. $T_r$ is the set of time periods in which room $r$ is available.
+    \end{description}
+\end{frame}
+
+\begin{frame}{Problem Formulation}
+    Some useful attributes are
+    \begin{description}
+	\item[$length_{c|p} $] is the number of lectures in a given course or pattern.
+	\item[$att_{c|r}$] are the attributes required/provided by a course/room.
+	\item[$size_{c|r}$] is the size of a course or a room.
+    \end{description}
+\end{frame}
+
+\begin{frame}{Problem Formulation}
+    The binary variables $x_{p,r}$ represent the assignment of room $r$ for all the lectures in pattern $p$.
+
+    The measure of a given assignment will be modeled by $w_{p,r}$. This way, the quality of a solution is \[
+    \sum_{p \in P} \sum_{r\in R} w_{p,r}x_{p,r}
+    ,\] which we aim to maximize.
+\end{frame}
+
+\begin{frame}{Problem Formulation}
+    The first constraint is that no more than one lecture is assigned to each room in each time period \[
+    \sum_{p \in P_{r,t}} x_{p,r} \le 1,\, r\in R,\,t\in T_r
+    ,\] where $P_{r,t}$ is the set of patterns that contain a lecture in time $t$ for which room $r$ is suitable, i.e, $P_{r,t} = \left\{ p \in P : r \in R_p,\,t\in T_p \right\} $.
+\end{frame}
+
+\begin{frame}{Problem Formulation}
+    From our previous example
+    \begin{table}[H]
+        \centering
+	\resizebox{.9\textwidth}{!}{
+        \begin{tabular}{c | c | c | c | c | c | c | c}
+	    Course ($c$) & $t_1$ & $t_2$ & $t_3$ & $t_4$ & $t_5$ & Feasible Rooms ($R_c$) & Patterns ($P_c$) \\
+	    \hline
+	    $c_1$ & $l_1^{(1)}$ & $l_2^{(1)}$ &  &  & $l_3^{(1)}$ & $r_2 $ & $\left\{ l_1^{(1)} \right\}, \left\{ l_2^{(1)} \right\} , \left\{ l_3^{(1)} \right\}, \left\{ l_1^{(1)},l_2^{(1)} \right\} ,  $ \\
+		  & & & & & & & $\left\{ l_1^{(1)}, l_3^{(1)} \right\} ,\left\{ l_2^{(1)},l_3^{(1)} \right\} , \left\{ l_1^{(1)},l_2^{(1)}, l_3^{(1)} \right\}$ \\
+		  \hline
+	    $c_2$ & & $l_1^{(2)}$ & $l_2^{(2)}$ & $l_3^{(2)}$ & & $r_1, r_2 $ & $\left\{ l_1^{(2)} \right\}, \left\{ l_2^{(2)} \right\} , \left\{ l_3^{(2)} \right\}, \left\{ l_1^{(2)},l_2^{(2)} \right\} ,  $ \\
+		  & & & & & & & $\left\{ l_1^{(2)}, l_3^{(2)} \right\} ,\left\{ l_2^{(2)},l_3^{(2)} \right\} , \left\{ l_1^{(2)},l_2^{(2)}, l_3^{(2)} \right\}$ \\
+	\end{tabular}}
+    \end{table}
+    if we had assigned room $r_2$ to both patterns $p_4^{(1)}=\left\{  l_1^{(1)}, l_2^{(1)}\right\} $ and $p_7^{(2)}=\left\{ l_1^{(2)}, l_2^{(2)}, l_3^{(2)} \right\} $, then, for $t_2$ we would have \[
+    \sum_{p \in P_{r_2,t_2}} x_{p,r_2} = x_{p_4^{(1)}, r_2} + x_{p_7^{(2)},r_2} = 2
+    ,\] a violation of the constraint.
+\end{frame}
+
+\begin{frame}{Problem Formulation}
+    We also must ensure that no more than one room is assigned to each lecture, thus \[
+	\sum_{p \in P_l} \sum_{r \in R_p} x_{p,r} \le 1,\, l \in L
+    .\] 
+\end{frame}
+
+\begin{frame}{Problem Formulation}
+    Finally, at most one pattern per course should be assigned to a given room, so \[
+	\sum_{p \in P_c} x_{p,r} \le 1,\, c \in C,\, r \in R_c
+    .\] This implies that, if two patterns from a given course are to be assigned to a single room, the "bigger" pattern must be used, so instead of \[
+    x_{\left\{ l_1^{(2)}\right\} ,r_2 } = x_{\left\{ l_2^{(2)}\right\} ,r_2 } = x_{\left\{ l_3^{(2)}\right\} ,r_2 } = 1
+    ,\] the solution should be only \[
+    x_{\left\{ l_1^{(2)}, l_2^{(2)}, l_3^{(2)}\right\} ,r_2 } = 1
+    .\] 
+\end{frame}
+
+\begin{frame}{Problem Formulation}
+    With these, our formulation becomes
+    \begin{align*}
+        \max_{x_{p,r}} \quad & \sum_{p \in P} \sum_{r\in R} w_{p,r}x_{p,r} \\
+	\textrm{s.t.} \quad & \sum_{p \in P_{r,t}} x_{p,r} \le 1, & r\in R,\,t\in T_r \\
+			    & \sum_{p \in P_l} \sum_{r \in R_p} x_{p,r} \le 1, & l \in L \\
+			    & \sum_{p \in P_c} x_{p,r} \le 1, & c \in C,\, r \in R_c \\
+			    & x_{p,r} \in \left\{ 0,1 \right\}, & p \in P,\, r\in R_p
+    .\end{align*}
+\end{frame}
 
 %%
 %%	Remover o número de páginas do slide com [plain]
