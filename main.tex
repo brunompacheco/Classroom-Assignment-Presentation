@@ -4,11 +4,12 @@
 \usepackage{style/ufsc}
 
 % Incluir arquivos da pasta figuras
-\graphicspath{{./figuras/}}
+\graphicspath{{./figures/}}
 
 % Pacote de texto aleatório
 \usepackage{lipsum}
 
+\usepackage{cancel}
 
 % Início do documento
 \begin{document}
@@ -250,6 +251,84 @@
     .\end{align*}
 \end{frame}
 
+\begin{frame}{Quality Measures}
+    Still, one question remains: what are the quality measures?
+
+    \begin{itemize}
+        \item Many different approaches for defining a quality measure exist and they are part of the problem instance to define;
+	\item The problem can be solved for multiple quality measures in a hierarchical manner:
+	    \begin{enumerate}
+	        \item Pick the most important quality measure;
+		\item Solve the problem;
+		\item Add the optimal value as a constraint;
+		\item Repeat.
+	    \end{enumerate}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Quality Measures - Examples}
+    \begin{description}
+	\item[Event hours (EH)] If a feasible solution for all lectures does not exist, measures the amount of events that got a room;
+	\item[Seated student hours (SH)] Weights EH by their number of students enrolled;
+	\item[Seat utilisation (SU)] Weights EH by the occupation rate of the room by the event;
+	\item[Room preference (RP)] Quantifies the preference of rooms by the courses, e.g., the lecturer's preference, the distance of the room to the department's office;
+	\item[Course room stability (RS)] Measures the amount of \emph{different} rooms assigned to each course;
+	\item[Spare seat robustness (SR)] If the number of enrolled students is defined after the room assignment, penalises situations in which the room has few seats left.
+    \end{description}
+\end{frame}
+
+\begin{frame}{Complexity}
+    Now that we have the problem full formulation, let's have a look at the impacts that the constraints have in the complexity of the problem.
+\end{frame}
+
+\begin{frame}{Baseline}
+    The most elementary form of the problem is the one where events that span multiple time periods do \emph{not} require the same room. This problem can be solved for each time period independently.
+
+    \begin{align*}
+        \max_{x_{p,r}} \quad & \sum_{p \in P} \sum_{r\in R} w_{p,r}x_{p,r} \\
+	\textrm{s.t.} \quad & \sum_{p \in P_{r,t}} x_{p,r} \le 1, & r\in R,\,t\in T_r \\
+			    & \sum_{p \in P_l} \sum_{r \in R_p} x_{p,r} \le 1, & l \in L \\
+			    & \xcancel{\sum_{p \in P_c} x_{p,r} \le 1}, & c \in C,\, r \in R_c \\
+			    & x_{p,r} \in \left\{ 0,1 \right\}, & p \in P,\, r\in R_p
+    .\end{align*}
+\end{frame}
+
+\begin{frame}{Baseline}
+    The matrix defined by the two constraints is known to be totally unimodular, that is, it can be solved through the LP relaxation. \linebreak
+
+    Also, this problem can be solved with an assignment problem algorithm in polynomial time.
+\end{frame}
+
+\begin{frame}{Contiguous Room Stability}
+    With the constraint for events that span more than one time period occupy a single room, the LP relaxation is not enough and the problem becomes NP-hard even for two time periods. \linebreak
+
+    Still, the situations in which fractional solutions arise from the LP relaxation are quite rare with real world (big enough) data. \linebreak
+
+    From this constraint, the need to use patterns on top of events arises.
+\end{frame}
+
+\begin{frame}{Course Room Stability}
+    If the quality that \emph{all} events from each course happen in the same room is treated as a hard constraint instead of as a quality measure to be optimized, oftentimes the instances with real world data are not even feasible.
+\end{frame}
+
+\begin{frame}{Lexicographic Optimisation}
+  \begin{columns}[c]
+      \begin{column}{.66\textwidth}
+	Lexicographic constraints are those added in the last step of the hierarchical optimisation for the quality measures. 
+	\begin{itemize}
+	    \item The addition of such a constraint will reduce the LP relaxation of the problem to a facet of the polytope defined by the constraints;
+	    \item Thus, the naturally integer property is maintained if originally present;
+	    \item At the same time, it does not guarantee that it will remove fractional extreme points if they exist.
+	\end{itemize}
+      \end{column}
+      \begin{column}{.33\textwidth}
+	  \begin{figure}[h]
+	      \centering
+	      \includegraphics[width=0.8\textwidth]{polytope.png}
+	  \end{figure}
+      \end{column}
+  \end{columns}
+\end{frame}
 %%
 %%	Remover o número de páginas do slide com [plain]
 %%
