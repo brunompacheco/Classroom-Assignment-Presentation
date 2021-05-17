@@ -28,28 +28,31 @@
 %%
 \begin{frame}{Introduction}
 \begin{itemize}
-    \item WTF is university course timetabling?
-    \item Why should I care?
+    \item What is university course timetabling? \begin{itemize}
+        \item University course timetabling is a large allocation problem, in which both time-slots and rooms are determined for each class meeting (lecture);
+        \item Room attributes, lectures that require more than a one-time slot, professor time restrctions, room characteristics, and others.
+    \end{itemize}
+    \item Why is it important?
+    \begin{itemize}
+        \item The improvement of the timetable process can bring a better experience to the course. Evenly distributed lectures during the week, less time wasted changing rooms, a better understanding of the use of university resources, etc.
+    \end{itemize}
 \end{itemize}
 \end{frame}
 
 
 \begin{frame}{Problem Variations}
 \begin{itemize}
-\item Variation A
+\item Post Enrollment Course Timetabling (PE-CTT)
     \begin{itemize}
-    \item Competitions, baselines, benchmarks
-    \item Some research or state-of-the-art or review
+    \item Schedule a set of events into rooms and time-slots based on the necessity created during the enrollment period of the university.
     \end{itemize}
-\item Variation B
+\item Curriculum-Based Course Timetabling (CB-CTT)
     \begin{itemize}
-    \item Competitions, baselines, benchmarks
-    \item Some research or state-of-the-art or review
+    \item Definition: Schedule a set of events to rooms and time-slots, respecting the curricula of the course, aiming to evenly spread the lectures in the weekdays, and preserving the same room for an event.
     \end{itemize}
-\item \textbf{Classroom assignment problem}
+\item \textbf{Classroom Assignment Problem}
     \begin{itemize}
-    \item Competitions, baselines, benchmarks
-    \item Some research or state-of-the-art or review
+    \item Schedule a set of events with defined time-slots into suitable rooms. In this variant, the optimization aims to produce results that don't break the continuity of the events.
     \end{itemize}
 \end{itemize}
 \end{frame}
@@ -329,13 +332,33 @@
       \end{column}
   \end{columns}
 \end{frame}
+
+\begin{frame}{Conclusion}
+This lecture was a brief explanation using a complex modeling approach for the timetabling problem. Solve the universities' timetabling real problem is necessary to add constraints, making it even harder to solve. 
+Example of constraints:
+    \begin{itemize}
+        \item Professors' schedule;
+        \item Group together classes from the same curricula;
+        \item Adding different classes of lectures (pratical, seminars, theorical);
+    \end{itemize}
+    
+
+\end{frame}
+
+\begin{frame}{Integer Programming Importance}
+
+In the end, it's important to note that the IP is in our daily lives. We brought the timetabling problem to show how IP is used in practical examples and try to approximate it and the students.
+
+\end{frame}
+
+\contato{E-mail: \\ \url{{ mpacheco.bruno,  pedro_kretz}@gmail.com}}
+\capadetras{Thank you!}
 %%
 %%	Remover o número de páginas do slide com [plain]
 %%
 \begin{frame}[plain]{Sem número de páginas}
 \lipsum[1]
 \end{frame}
-
 
 
 %%
