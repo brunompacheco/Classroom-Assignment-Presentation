@@ -15,12 +15,6 @@ set R_p[p12] := r2;
 set R_p[p13] := r2;
 set R_p[p21] := r1, r2;
 
-set R_c[c1] := r2;
-set R_c[c2] := r1, r2;
-
-set P_c[c1] := p11, p12, p13;
-set P_c[c2] := p21;
-
 set P_l[l11] := p11, p13;
 set P_l[l12] := p11, p13;
 set P_l[l13] := p12, p13;

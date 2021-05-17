@@ -4,12 +4,21 @@ set R;
 set L;
 set P;
 
-set L_c {C};
-set R_p {P};
-set R_c {C};
-set P_c {C};
-set P_l {L};
-set P_rt {R,T};
+set L_c {C} within L;
+set R_p {P} within R;
+set P_l {L} within P;
+set P_rt {R,T} within P;
+
+# set P_c {C} within P;
+# set R_c {C} within R;
+
+# these (below and above) pairs of lines must be commented/uncommented when
+# submitting the job to NEOS server as the AMPLPy API already writes the R_c
+# and P_c sets when exporting the data file
+
+set P_c {c in C} = union {l in L_c[c]} P_l[l];
+set R_c {c in C} = union {p in P_c[c]} R_p[p];
+
 
 # param w {P,R};
 param w {P};
