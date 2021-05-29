@@ -27,11 +27,36 @@
 %%
 %%	Chamar o ambiente frame para slides comuns
 %%
+
+\begin{frame}{Agenda}
+    \begin{columns}[c]
+        \begin{column}{.5\textwidth}
+    
+    	\begin{enumerate}
+            \item Introduction
+            \item Formulation
+            \item Solution
+            \item Example
+            \item Conclusion
+        \end{enumerate}
+    
+        \end{column}
+        \begin{column}{.5\textwidth}
+    
+    	\begin{figure}[h]
+    	    \centering
+    	    \includegraphics[width=0.8\textwidth]{UFSC.pdf}
+    	\end{figure}
+    
+        \end{column}
+    \end{columns}
+\end{frame}
+
 \begin{frame}{Introduction}
 \begin{itemize}
     \item What is university course timetabling? \begin{itemize}
         \item University course timetabling is a large allocation problem, in which both time-slots and rooms are determined for each class meeting (lecture);
-        \item Room attributes, lectures that require more than a one-time slot, professor time restrctions, room characteristics, and others.
+        \item Room attributes, lectures that require more than a one-time slot, professor time restrictions, room characteristics, and others.
     \end{itemize}
     \item Why is it important?
     \begin{itemize}
@@ -439,6 +464,29 @@
 	\item \textbf{37.316} (+ 5.916) variables
 	\item \textbf{7166} simplex iterations
     \end{itemize}
+    
+The LP relaxation returned non-integer solution.
+
+\end{frame}
+
+\begin{frame}{UFSC - Results}
+
+	 \begin{columns}[c]
+        \begin{column}{.3\textwidth}
+    
+    	One example of successful alocation for the room CTC305.
+    
+        \end{column}
+        \begin{column}{.7\textwidth}
+    
+    	\begin{figure}[h]
+    	    \centering
+    	    \includegraphics[width=0.8\textwidth]{figures/timetable_result.jpeg}
+    	\end{figure}
+    
+        \end{column}
+    \end{columns}
+
 \end{frame}
 
 \begin{frame}{UFSC - Challenges}
@@ -470,82 +518,5 @@ In the end, it's important to note that the IP is in our daily lives. We brought
 
 \contato{E-mail: \\ \url{{ mpacheco.bruno,  pedro_kretz}@gmail.com}}
 \capadetras{Thank you!}
-%%
-%%	Remover o número de páginas do slide com [plain]
-%%
-\begin{frame}[plain]{Sem número de páginas}
-\lipsum[1]
-\end{frame}
-
-
-%%
-%%	Você pode usar mais de uma coluna! Inclusão automatizada de imagens com \imagem{arquivo}{label}{legenda}
-%%
-\begin{frame}{Texto em duas colunas}
-  \begin{columns}[c]
-    \begin{column}{.5\textwidth}
-
-	O brasão da UFSC pode ser observado na \figurename~\ref{fig:ufsc}.
-
-    \end{column}
-    \begin{column}{.5\textwidth}
-
-	\imagem{UFSC.pdf}{fig:ufsc}{Brasão da UFSC.}
-
-    \end{column}
-  \end{columns}
-\end{frame}
-
-
-%%
-%%	Caixas de texto
-%%
-\begin{frame}{Caixas de Texto}
-
-\begin{block}{Bloco Normal}
-Conteúdo do bloco normal.
-\end{block}
-
-\begin{alertblock}{Bloco de Alerta}
-Conteúdo do bloco de alerta.
-\end{alertblock}
-
-\begin{exampleblock}{Bloco de Exemplo}
-Conteúdo do bloco de exemplo
-\end{exampleblock}
-
-\end{frame}
-
-
-%%
-%%	Equações
-%%
-\begin{frame}{Equações}
-
-Observe a Equação \ref{eq:sum}.
-
-% Iniciar ambiente equation
-\begin{equation}\label{eq:sum}
-\sum_{n=1}^\infty \frac{1}{n^2} = \lim_{n \to \infty} \left( \frac{1}{1^2} + \frac{1}{2^2} + \cdots + \frac{1}{n^2} \right) = \frac{\pi^2}{6}
-\end{equation}
-
-Observe as Equações \ref{eq:bhaskara}.
-
-% Iniciar ambiente split dentro de equation para várias linhas
-\begin{equation}\label{eq:bhaskara}
-\begin{split}
-x_1 = \frac{-b + \sqrt{b^2 - 4ac}}{2a} \\
-x_2 = \frac{-b - \sqrt{b^2 - 4ac}}{2a}
-\end{split}
-\end{equation}
-
-\end{frame}
-
-
-%%
-%%	Incluir \capadetras para agradecimentos e contato.
-%%
-\contato{Contato: \\ \url{{autor1, autor2, autor3}@ufsc.br}}
-\capadetras{Obrigado!}
 
 \end{document}
