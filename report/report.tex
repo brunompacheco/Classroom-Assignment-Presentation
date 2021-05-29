@@ -1,0 +1,108 @@
+\documentclass[a4paper,11pt]{article}
+\usepackage[T1]{fontenc}		% Seleção de códigos de fonte
+\usepackage[utf8]{inputenc}		% Codificação do documento (conversão
+\usepackage{indentfirst}		% Indenta o primeiro parágrafo de cada seção.
+\usepackage{graphicx}			% Inclusão de gráficos
+\usepackage{subcaption}				% enables the use of subfigures in floats
+\usepackage[
+%	a4paper,
+left=2cm,
+right=1.5cm,
+bottom=1.5cm,
+top = 2.5cm, 
+foot=0.7cm]{geometry}
+\usepackage{url}
+\usepackage{setspace}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{fancyhdr}
+\usepackage{multirow}
+\usepackage{tabularx}
+\usepackage{placeins}
+\usepackage{natbib}
+\usepackage{import}
+\usepackage[nottoc]{tocbibind} % insere as referências no sumário
+\usepackage{babel}
+\usepackage{hyperref}
+\usepackage{float}
+
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{DAS410049 - Integer Programming}
+\rhead{Final Report}
+\rfoot{\thepage}
+
+\begin{document}
+	\thispagestyle{empty}
+\begin{center}
+	\includegraphics[height=2cm]{imagens/logoUFSCsimples.png} \\
+	{\Large Universidade Federal de Santa Catarina -- UFSC} \\
+	{\Large Centro Tecnológico -- CTC} \\
+	{\Large Departamento de Automação e Sistemas -- DAS} \\
+	\vspace{1cm}
+	{\large DAS410049 - Integer Programming} \\
+	\vfill
+	\large{\textbf{University Course Timetabling - Classroom Assignment} \\
+	} 
+	\vspace{1cm}
+	% Integrantes: \\
+    Bruno Machado Pacheco (202100361) \\
+    Pedro Kretzschmar (XXXXXXXXX) \\
+    \vfill
+	Florianópolis, \today.
+\end{center}
+
+\clearpage
+
+\tableofcontents
+
+\clearpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\input{intro}
+\FloatBarrier
+The present report has the objective to explain the contents of the lecture about university course timetabling (UCT). The content that will be explained here are the important of the subject to society, it's variations, the formulation of the problem, an use case using the formulation described, and finally the conclusion.
+\newpage
+
+\input{uct}
+\FloatBarrier
+The university course timetabling is an allocation problem, in which both time-slots and rooms are fitted for each class meeting (lecture). This is a very challenging problem that involves solving issues like, select the room with the right attributes to the lecture, allocate the lectures in more than one time-slot if required, without breaking its continuity, arranging the lectures respecting the professors' time restriction, and others.
+
+
+Students, professors, and the university's staff can have a better experience at the university with an improved timetable process. A better experience can be achieved through:
+\begin{itemize}
+    \item Evenly distributed lectures during the week;
+    \item Less time wasted changing between rooms;
+    \item Better understanding of the use of university resources;
+    \item Less time wasted allocating the lectures manually.
+\end{itemize}
+
+This problem can be approached in different ways. During the lecture three main variations were briefly explained, the Post Enrollment Course Timetabling (PE-CTT), the Curriculum-Based Course Timetabling (CB-CTT), and the Classroom Assignment Problem.
+
+The PE-CTT problem focus on scheduling a set of events into rooms and time-slots based on necessity created during the enrollment period of the university.
+
+The CB-CTT problem is related to scheduling a set of events to rooms and time-slots, respecting the curricula of the course, aiming to give the students more comfort during their semester. The solution aims to spread the lectures evenly during the week, preserve the same room
+
+Finally, the  Classroom Assignment Problem consists of scheduling a set of events with already defined time-slots into suitable rooms. Here, the optimization aims to produce results that don't break the continuity of the events, at the same time that handles other common restrictions, commented above.
+
+
+\newpage
+
+\input{formulation}
+\FloatBarrier
+\newpage
+
+\input{complexity}
+\FloatBarrier
+\newpage
+
+\input{use-case}
+\FloatBarrier
+\newpage
+
+\input{conclusion}
+The lecture was a brief explanation using a complex modeling approach for the timetabling problem. To solve the UFSC-CTC timetabling problem was quite difficult, even with a simpler version of the real problem. Other constraints could be added to make it closer to the real problem, like professors' schedules, group together classes from the same curricula, adding different classes of lectures (practical, seminars). In the end, the main goal of the lecture was to transmit how important the IP is and give a brief showcase of how it is inserted into our daily lives.
+\newpage
+
+\end{document}
