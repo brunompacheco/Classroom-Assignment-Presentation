@@ -10,5 +10,39 @@ To avoid diving into exceptions and particularities, some limitations were impos
     \item Lectures bigger than the rooms in which they take place were downsized.
 \end{itemize}
 
+Besides these limitations, some further assumptions were required, namely
+\begin{enumerate}
+    \item The quality measure used was the number of lectures in each pattern;
+    \item The room requirement was pattern-based instead of course-based as different lectures from the same course have different number of students enrolled;
+    \item All rooms are available full time (i.e., $T_r$ is not necessary);
+    \item An infeasibility constraint was added for modeling;
+\end{enumerate}
+which resulted in the following formulation for the use case, with the differences from the original formulation highlighted:
+\begin{align*}
+    \max_{x_{p,r}} \quad & \sum_{p \in P} \sum_{r\in R} \boldsymbol{w_{p}}x_{p,r} \\
+    \textrm{s.t.} \quad & \sum_{p \in P_{r,t}} x_{p,r} \le 1, & r\in R,\,t\in \boldsymbol{T} \\
+			& \sum_{p \in P_l} \sum_{r \in R_p} x_{p,r} \le 1, & l \in L \\
+			& \sum_{p \in P_c} x_{p,r} \le 1, & c \in C,\, r \in R_c \\
+			& x_{p,r} \in \left\{ 0,1 \right\}, & p \in P,\, r\in \boldsymbol{R} \\
+			& \boldsymbol{x_{p,r}=0,} & \boldsymbol{p \in P,\, r \notin R_p} \\
+.\end{align*}
 
+\subsection{Implementation}
+
+All the steps performed from the data preprocessing to the results were presented, that is,
+\begin{enumerate}
+    \item Preprocessing the data with Python data science suite;
+    \item AMPL model development;
+    \item Testing through small examples;
+    \item Use of AMPL's Python API (AMPLPy) to bridge the gap;
+    \item Solve using Gurobi at NEOS Server.
+\end{enumerate}
+
+Further details of the implementation can be seen in the project's repository\footnote{\href{https://github.com/brunompacheco/Classroom-Assignment-Presentation}{https://github.com/brunompacheco/Classroom-Assignment-Presentation}}.
+
+\subsection{Results}
+
+The instance of the problem from the use case had 19.448 constraints with 43.132 variables, which was solved by the server, after some pruning, in 7166 simples iterations. This shows the size of the problem, even with all the limitations imposed. All lectures had a room assigned to, which was expected since a feasible solution is known to exist even for the problem without the caveats imposed by the presenters.
+
+The major challenges presented were the poor quality of the data and the lack of information about the rooms and the groupings of lectures within a given course, besides the absence of the preference for the rooms.
 
