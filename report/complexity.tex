@@ -1,0 +1,13 @@
+\section{Complexity}
+
+A brief analysis of the complexity of the problem was presented through different variations of the formulation exposed in which the constraints were relaxed or removed.
+
+The first form presented, and most elementary one, was that in which subsequent lectures of the same course do not need the same room. This means that we can solve the assignment for each time period and, thus, do not need to assign rooms to patterns, but directly to lectures. This also means that $(3)$ is not necessary anymore. The two remaining constraints define a totally unimodular matrix, that is, the problem can be solved through its LP relaxation. Furthermore, the problem can be solved through assignment algorithms in polynomial time.
+
+If contiguous room stability (subsequent lectures from the same course must take place in the same room) is not neglected, that is, if the formulation is just as presented, the assumptions beforehand presented are not valid and the LP relaxation may return fractional solutions. It is known, though, that fractional solutions are quite rare in real world instances of the problem.
+
+If even more that contiguous room stability, course room stability is imposed, that is, that all lectures of a course are required to happen in the same room, then it was presented that problem instances are not even always feasible.
+
+Finally, the complexity of the hierarchical optimisation procedure was presented. It was shown that the addition of these lexicographic constraints do not affect the integer property of the solution space in one way or the other.
+
+

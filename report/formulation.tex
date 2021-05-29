@@ -1,0 +1,50 @@
+\section{Problem Formulation}
+
+The formulation presented was based on 5 basic parameters directly related to the features of the problem. These were:
+\begin{description}
+	\item[$C$] the set of all courses $c$;
+	\item[$L_c$] the set of all lectures of a course $c$;
+	\item[$P_c$] the set of all patterns $p$ of $c$;
+	\item[$R$] the set of all rooms $r$;
+	\item[$T$] the set of all time periods $t$.
+\end{description}
+
+Then, as our working variable, we presented $\{x_{p,r}\} $, binary variables that represent the assignment of a room $r$ to a pattern $p$. From these, one can measure the quality of a solution of the problem through the quality of each room-to-pattern assignment $w_{p,r}$.
+
+Finally, the formulation presented was
+\begin{align*}
+    \max_{x_{p,r}} \quad & \sum_{p \in P} \sum_{r\in R} w_{p,r}x_{p,r} \\
+    \textrm{s.t.} \quad & \sum_{p \in P_{r,t}} x_{p,r} \le 1, & r\in R,\,t\in T_r  & \tag{1} \\
+			& \sum_{p \in P_l} \sum_{r \in R_p} x_{p,r} \le 1, & l \in L  & \tag{2} \\
+			& \sum_{p \in P_c} x_{p,r} \le 1, & c \in C,\, r \in R_c  & \tag{3} \\
+			& x_{p,r} \in \left\{ 0,1 \right\}, & p \in P,\, r\in R_p
+.\end{align*}
+
+\subsection{Constraints}
+
+As noted, the formulation presented has 3 constraints. $(1)$ limits the solution space to just those in which the rooms are assignment to no more than one pattern at each time period. Note that $P_{r,t}$ is used to indicate the set of patterns that have lectures in time $t$ for which room $r$ is suitable.
+
+Similarly, $(2)$ ensures that feasible solutions assign no more than one room to each lecture $l$ by summing the assignments to the patterns that contain the given lecture. There, $P_l$ indicates the set of patterns that contain lecture $l$ and $R_p$ the set of rooms suitable for all lectures in pattern $p$.
+
+Lastly, $(3)$ limits the solutions to those that assign a room to no more than one pattern for each course. This is so because $P_c$ is closed to union of its members, that is, $p_1, p_2 \in P_c \implies p_1 \cup p_2 \in P_c$. Therefore, in practice, this constraint does not limit the solution space, just the "duplicate" solutions.
+
+\subsection{Quality Measures}
+
+An hierarchical approach to solve the problem was presented, in which multiple quality measures are used and sorted by importance. The steps are:
+\begin{enumerate}
+    \item Pick the most important quality measure;
+    \item Solve the problem;
+    \item Add the optimal value as a constraint;
+    \item Repeat.
+\end{enumerate}
+
+Even though quality measures are very specific to the instance of the problem, some of the more commonly found were presented. These are:
+\begin{description}
+    \item[Event hours (EH)] If a feasible solution for all lectures does not exist, measures the amount of events that got a room;
+    \item[Seated student hours (SH)] Weights EH by their number of students enrolled;
+    \item[Seat utilisation (SU)] Weights EH by the occupation rate of the room by the event;
+    \item[Room preference (RP)] Quantifies the preference of rooms by the courses, e.g., the lecturer's preference, the distance of the room to the department's office;
+    \item[Course room stability (RS)] Measures the amount of \emph{different} rooms assigned to each course;
+    \item[Spare seat robustness (SR)] If the number of enrolled students is defined after the room assignment, penalises situations in which the room has few seats left.
+\end{description}
+
